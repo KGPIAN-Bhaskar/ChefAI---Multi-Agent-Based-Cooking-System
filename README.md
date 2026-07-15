@@ -86,7 +86,7 @@ ChefAI-MultiAgent-Cooking-System/
 ├── sample_ingredients.txt     # Sample Input
 ├── README.md                  # Documentation
 └── .gitignore
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+>>>>>>> 
 ```
 
 ---
@@ -136,7 +136,7 @@ ChefAI-MultiAgent-Cooking-System/
 # ⚙️ Workflow
 
 ### Step 1
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+>>>>>>> 
 
 User enters ingredients or uploads a file.
 
@@ -192,7 +192,7 @@ streamlit run app.py
 ## Sample Input
 =======
 The application will launch automatically in your default browser.
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+>>>>>>>
 
 ---
 
@@ -222,7 +222,7 @@ or JSON format
   "garlic",
   "olive oil",
   "pasta"
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+>>>>>>> 
 ]
 ```
 

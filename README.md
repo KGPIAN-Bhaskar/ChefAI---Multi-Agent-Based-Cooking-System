@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Chef AI – LLM Multi-Agent Cooking System
 
 Chef AI is a modern Streamlit web application powered by a cooperative **LLM Multi-Agent System** using the modern `google-genai` SDK and the `gemini-3.1-flash-lite` model. It takes raw text inputs or ingredient files and transforms them into beautifully narrated, step-by-step recipe cards.
@@ -18,21 +19,68 @@ Streamlit UI ──> Security Agent ──> Parser Agent ──> Recipe Gen Agen
 4. **Narrator Agent** ([narrator.py](file:///C:/Users/manda/Desktop/Chef%20AI/narrator.py)): Decorates the steps with stage-specific cooking emojis, writes descriptions, adds friendly chef notes, and computes servings/cooking time.
 
 ---
+=======
+# 👨‍🍳 Chef AI – Multi-Agent Cooking System
 
-## Features
+> **An AI-powered multi-agent cooking assistant that transforms everyday ingredients into delicious recipes using intelligent agent-based workflows and a modern Streamlit interface.**
+>>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
 
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+
+<<<<<<< HEAD
 - **Cooperative LLM Multi-Agent System**: Utilizes `gemini-3.1-flash-lite` for advanced reasoning, spelling correction, safety, and cooking narration.
 - **Strict 4-Call Production Limit**: Generates every recipe using exactly 4 total LLM calls (1 call per agent) to preserve API quota on the free tier.
 - **Zero-Error Fallback Security**: Built-in offline mode. If `GEMINI_API_KEY` is not present, all agents degrade to a localized, rule-based algorithm automatically.
 - **Modern UI**: Streamlit interface with floating animated food emojis.
 
+=======
+>>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
 ---
 
-## File Structure
+## 📌 Overview
 
-```
-chef-ai-recipe-generator/
+Chef AI is an intelligent recipe generation system designed to simplify everyday cooking. Users can enter ingredients manually or upload ingredient files, and the application automatically generates personalized recipes with cooking instructions, preparation tips, and engaging narration.
+
+The project demonstrates modular software design by separating responsibilities into independent components responsible for parsing, validation, recipe generation, orchestration, and presentation.
+
+---
+
+# ✨ Features
+
+* 🥗 Generate recipes from available ingredients
+* 📄 Upload ingredient files (`.txt` or `.json`)
+* 🧹 Automatic ingredient cleaning and normalization
+* 🔒 Secure input validation and sanitization
+* 🍅 Duplicate removal and plural normalization
+* 🍝 Intelligent rule-based recipe generation
+* 🎭 Fun recipe narration with emojis
+* 🎨 Modern and responsive Streamlit interface
+* ⚡ Lightweight and beginner-friendly architecture
+* 🔧 Modular Python codebase for easy extension
+
+---
+
+# 🚀 Tech Stack
+
+| Technology    | Purpose           |
+| ------------- | ----------------- |
+| Python        | Core Programming  |
+| Streamlit     | Web Interface     |
+| JSON          | Data Handling     |
+| Rule-Based AI | Recipe Generation |
+| Git & GitHub  | Version Control   |
+
+---
+
+# 📂 Project Structure
+
+```text
+ChefAI-MultiAgent-Cooking-System/
 │
+<<<<<<< HEAD
 ├── app.py                  # Streamlit UI
 ├── mcp_server.py           # Orchestration module
 ├── security.py             # Security checks, sanitization, and Pydantic schemas
@@ -45,10 +93,23 @@ chef-ai-recipe-generator/
 ├── requirements.txt        # Project dependencies
 ├── README.md               # Project documentation
 └── sample_ingredients.txt   # Sample ingredients list for testing
+=======
+├── app.py                     # Streamlit User Interface
+├── mcp_server.py              # Multi-Agent Orchestrator
+├── recipe_generator.py        # Recipe Generation Logic
+├── ingredient_parser.py       # Ingredient Parsing & Cleaning
+├── narrator.py                # Recipe Narration
+├── security.py                # Input Validation & Security
+├── requirements.txt           # Project Dependencies
+├── sample_ingredients.txt     # Sample Input
+├── README.md                  # Documentation
+└── .gitignore
+>>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
 ```
 
 ---
 
+<<<<<<< HEAD
 ## Installation & Setup
 
 1. Ensure Python 3.8+ is installed.
@@ -63,31 +124,212 @@ chef-ai-recipe-generator/
    ```
 
 ---
+=======
+# 🏗️ System Architecture
 
-## How to Run
-
-Launch the application using Streamlit:
-```bash
-streamlit run app.py
+```text
+                 User Input
+                     │
+          ┌──────────▼──────────┐
+          │   Streamlit UI       │
+          └──────────┬──────────┘
+                     │
+             Security Validation
+                     │
+                     ▼
+         Ingredient Parser Agent
+                     │
+                     ▼
+        Recipe Generator Agent
+                     │
+                     ▼
+          Narrator / Formatter
+                     │
+                     ▼
+            Final Recipe Card
 ```
 
 ---
 
-## Sample Input
+# ⚙️ Workflow
 
-You can test with the provided `sample_ingredients.txt` containing:
+### Step 1
+>>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+
+User enters ingredients or uploads a file.
+
+### Step 2
+
+Security module validates and sanitizes the input.
+
+### Step 3
+
+Parser extracts ingredients, removes duplicates, and normalizes plural words.
+
+### Step 4
+
+Recipe Generator creates a suitable recipe based on detected ingredients.
+
+### Step 5
+
+Narrator formats the recipe into a visually appealing cooking guide.
+
+---
+
+# 📦 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/KGPIAN-Bhaskar/ChefAI-MultiAgent-Cooking-System.git
 ```
+
+Move into the project directory:
+
+```bash
+cd ChefAI-MultiAgent-Cooking-System
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# ▶️ Run the Application
+
+```bash
+streamlit run app.py
+```
+
+<<<<<<< HEAD
+---
+
+## Sample Input
+=======
+The application will launch automatically in your default browser.
+>>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+
+---
+
+# 📥 Sample Input
+
+Example ingredient list:
+
+```text
 tomato
 onion
-pasta
 garlic
 olive oil
+pasta
 ```
-Or upload a JSON list file like:
+
+or JSON format
+
 ```json
 [
+<<<<<<< HEAD
   "chicken",
   "rice",
   "ghee"
+=======
+  "tomato",
+  "onion",
+  "garlic",
+  "olive oil",
+  "pasta"
+>>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
 ]
 ```
+
+---
+
+# 📊 Example Output
+
+```
+🍝 Garlic Tomato Pasta
+
+Ingredients:
+• Tomato
+• Onion
+• Garlic
+• Pasta
+• Olive Oil
+
+Cooking Steps:
+1. Heat olive oil.
+2. Sauté onions and garlic.
+3. Add chopped tomatoes.
+4. Cook the pasta separately.
+5. Mix everything together.
+6. Garnish and serve hot.
+
+Enjoy your meal! 🍽️
+```
+
+---
+
+# 🔒 Security Features
+
+* Input sanitization
+* HTML tag removal
+* Safe file upload validation
+* Ingredient count validation
+* Duplicate removal
+* Invalid input detection
+
+---
+
+# 🎯 Future Improvements
+
+* 🤖 LLM-powered recipe generation
+* 🧠 Multi-Agent AI using LangGraph
+* 🍎 Nutrition analysis
+* 📸 Image-based ingredient recognition
+* 🛒 Grocery recommendation system
+* 🌍 Multi-language support
+* 🎤 Voice-based cooking assistant
+* 📱 Mobile application
+* ☁️ Cloud deployment
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork this repository.
+2. Create a new feature branch.
+3. Commit your changes.
+4. Submit a Pull Request.
+
+---
+
+# 📄 License
+
+This project is intended for educational and learning purposes.
+
+---
+
+# 👨‍💻 Author
+
+## **Bhaskar Mandal**
+
+**AI/ML Engineer Enthusiast**
+
+**M.Tech, IIT Kharagpur**
+
+* 💼 Interested in Artificial Intelligence, Machine Learning, Data Science, and Multi-Agent Systems
+* 🐍 Skilled in Python, C++, SQL, Machine Learning, Deep Learning, Streamlit, and Git
+* 🌱 Currently exploring LLMs, RAG, LangChain, LangGraph, MCP, and AI Agents
+
+### Connect with me
+
+* GitHub: https://github.com/KGPIAN-Bhaskar
+* LinkedIn: https://www.linkedin.com/in/bhaskar-mandal/
+
+---
+
+⭐ **If you found this project helpful, consider giving it a Star on GitHub!**

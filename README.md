@@ -20,25 +20,7 @@ Streamlit UI ──> Security Agent ──> Parser Agent ──> Recipe Gen Agen
 
 ---
 =======
-# 👨‍🍳 Chef AI – Multi-Agent Cooking System
 
-> **An AI-powered multi-agent cooking assistant that transforms everyday ingredients into delicious recipes using intelligent agent-based workflows and a modern Streamlit interface.**
->>>>>>> 
-
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
-
-<<<<<<< HEAD
-- **Cooperative LLM Multi-Agent System**: Utilizes `gemini-3.1-flash-lite` for advanced reasoning, spelling correction, safety, and cooking narration.
-- **Strict 4-Call Production Limit**: Generates every recipe using exactly 4 total LLM calls (1 call per agent) to preserve API quota on the free tier.
-- **Zero-Error Fallback Security**: Built-in offline mode. If `GEMINI_API_KEY` is not present, all agents degrade to a localized, rule-based algorithm automatically.
-- **Modern UI**: Streamlit interface with floating animated food emojis.
-
-=======
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
----
 
 ## 📌 Overview
 

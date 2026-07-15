@@ -1,335 +1,176 @@
-<<<<<<< HEAD
-# Chef AI – LLM Multi-Agent Cooking System
+# 🍳 Chef AI – Multi-Agent Cooking System
 
-Chef AI is a modern Streamlit web application powered by a cooperative **LLM Multi-Agent System** using the modern `google-genai` SDK and the `gemini-3.1-flash-lite` model. It takes raw text inputs or ingredient files and transforms them into beautifully narrated, step-by-step recipe cards.
-
----
-
-## Architecture
-
-The system coordinates 4 specialized LLM agents in a sequential, cooperative pipeline:
-
-```
-Streamlit UI ──> Security Agent ──> Parser Agent ──> Recipe Gen Agent ──> Narrator Agent
-```
-
-1. **Security Agent** ([security.py](file:///C:/Users/manda/Desktop/Chef%20AI/security.py)): Evaluates the raw input for safety issues (injections, script executions, vulgarity) and checks if the prompt is food-related.
-2. **Parser Agent** ([ingredient_parser.py](file:///C:/Users/manda/Desktop/Chef%20AI/ingredient_parser.py)): Splits inputs, corrects typos (e.g. `chiken` $\rightarrow$ `chicken`), normalizes plurals to singular, and removes duplicates.
-3. **Recipe Generator Agent** ([recipe_generator.py](file:///C:/Users/manda/Desktop/Chef%20AI/recipe_generator.py)): Dynamically decides a cooking style based on ingredients and writes exactly 5 clear, sequential cooking instructions.
-4. **Narrator Agent** ([narrator.py](file:///C:/Users/manda/Desktop/Chef%20AI/narrator.py)): Decorates the steps with stage-specific cooking emojis, writes descriptions, adds friendly chef notes, and computes servings/cooking time.
-
----
-=======
-# 👨‍🍳 Chef AI – Multi-Agent Cooking System
-
-> **An AI-powered multi-agent cooking assistant that transforms everyday ingredients into delicious recipes using intelligent agent-based workflows and a modern Streamlit interface.**
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
-
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
-
-<<<<<<< HEAD
-- **Cooperative LLM Multi-Agent System**: Utilizes `gemini-3.1-flash-lite` for advanced reasoning, spelling correction, safety, and cooking narration.
-- **Strict 4-Call Production Limit**: Generates every recipe using exactly 4 total LLM calls (1 call per agent) to preserve API quota on the free tier.
-- **Zero-Error Fallback Security**: Built-in offline mode. If `GEMINI_API_KEY` is not present, all agents degrade to a localized, rule-based algorithm automatically.
-- **Modern UI**: Streamlit interface with floating animated food emojis.
-
-=======
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
----
-
-## 📌 Overview
-
-Chef AI is an intelligent recipe generation system designed to simplify everyday cooking. Users can enter ingredients manually or upload ingredient files, and the application automatically generates personalized recipes with cooking instructions, preparation tips, and engaging narration.
-
-The project demonstrates modular software design by separating responsibilities into independent components responsible for parsing, validation, recipe generation, orchestration, and presentation.
+Chef AI is a premium, multi-agent cooking assistant that transforms raw ingredient inputs into fully curated, narrated, and visually stunning recipe cards. The system leverages the power of Gemini models (`gemini-3.1-flash-lite` with structured output schemas) and coordinates a pipeline of specialized agents orchestrated through a central coordinator.
 
 ---
 
-# ✨ Features
+## 🏗️ Architecture & Orchestration
 
-* 🥗 Generate recipes from available ingredients
-* 📄 Upload ingredient files (`.txt` or `.json`)
-* 🧹 Automatic ingredient cleaning and normalization
-* 🔒 Secure input validation and sanitization
-* 🍅 Duplicate removal and plural normalization
-* 🍝 Intelligent rule-based recipe generation
-* 🎭 Fun recipe narration with emojis
-* 🎨 Modern and responsive Streamlit interface
-* ⚡ Lightweight and beginner-friendly architecture
-* 🔧 Modular Python codebase for easy extension
+The core design follows an **orchestrated multi-agent pipeline** where a central **MCP (Model Context Protocol) Server / Orchestrator** controls the flow of data. Rather than agents communicating in an ad-hoc mesh, they are executed in a structured, sequential dependency pipeline. This ensures high predictability, safety, and strict compliance with the data contracts (Pydantic models) required at each stage.
 
----
-
-# 🚀 Tech Stack
-
-| Technology    | Purpose           |
-| ------------- | ----------------- |
-| Python        | Core Programming  |
-| Streamlit     | Web Interface     |
-| JSON          | Data Handling     |
-| Rule-Based AI | Recipe Generation |
-| Git & GitHub  | Version Control   |
-
----
-
-# 📂 Project Structure
-
-```text
-ChefAI-MultiAgent-Cooking-System/
-│
-<<<<<<< HEAD
-├── app.py                  # Streamlit UI
-├── mcp_server.py           # Orchestration module
-├── security.py             # Security checks, sanitization, and Pydantic schemas
-├── ingredient_parser.py    # Typo correction, plural normalization, and parser schemas
-├── recipe_generator.py     # Recipe generation and selector schemas
-├── narrator.py             # Recipe narrator, metadata compiler, and decorator schemas
-│
-├── .env                    # Local environment variables (ignored by git)
-├── .gitignore              # Git ignore rules
-├── requirements.txt        # Project dependencies
-├── README.md               # Project documentation
-└── sample_ingredients.txt   # Sample ingredients list for testing
-=======
-├── app.py                     # Streamlit User Interface
-├── mcp_server.py              # Multi-Agent Orchestrator
-├── recipe_generator.py        # Recipe Generation Logic
-├── ingredient_parser.py       # Ingredient Parsing & Cleaning
-├── narrator.py                # Recipe Narration
-├── security.py                # Input Validation & Security
-├── requirements.txt           # Project Dependencies
-├── sample_ingredients.txt     # Sample Input
-├── README.md                  # Documentation
-└── .gitignore
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+```mermaid
+graph TD
+    User([User Input: Text/File]) --> UI[Streamlit UI app.py]
+    UI -->|1. Invokes process_input| MCP[MCP Server mcp_server.py]
+    
+    subgraph Multi-Agent Pipeline Orchestrated by MCP
+        MCP -->|2. Raw Input| SecAgent[Security Agent security.py]
+        SecAgent -->|Checks safety, relevance, prompt injection| SecAgent
+        SecAgent -->|3. Sanitized Text| ParserAgent[Parser Agent ingredient_parser.py]
+        
+        ParserAgent -->|Spelling corrections, plural normalization, deduplication| ParserAgent
+        ParserAgent -->|4. Cleaned List| Validator[Rule-Based Validator security.py]
+        
+        Validator -->|Check limits 1-30 items| Validator
+        Validator -->|5. Validated List| GenAgent[Recipe Generator Agent recipe_generator.py]
+        
+        GenAgent -->|Decides cooking style, generates raw 5-step recipe| GenAgent
+        GenAgent -->|6. Raw Recipe JSON| NarratorAgent[Narrator Agent narrator.py]
+        
+        NarratorAgent -->|Adds emojis, estimates time/difficulty, custom note| NarratorAgent
+        NarratorAgent -->|7. Rich Narrated JSON| MCP
+    end
+    
+    MCP -->|8. Final Rich Recipe JSON| UI
+    UI -->|9. Rendered Interactive Card| User
 ```
 
 ---
 
-<<<<<<< HEAD
-## Installation & Setup
+## 👥 The 4 Collaborating Agents
 
-1. Ensure Python 3.8+ is installed.
-2. Clone this workspace directory.
-3. Install the dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Create a `.env` file in the root directory and add your Gemini API Key:
-   ```env
-   GEMINI_API_KEY=your_actual_api_key_here
-   ```
+Each agent has a singular, focused responsibility and is backed by a fallback system to ensure uninterrupted operation even during API issues.
+
+### 1. 🛡️ Security Agent (`security.py`)
+*   **Role**: Acting as the first line of defense.
+*   **Key Responsibilities**:
+    *   Detects and blocks prompt injections, HTML/JS scripts, and SQL injection payloads.
+    *   Filters out vulgarity, harassment, and unsafe instructions.
+    *   Determines if the request is **food-related**. If a user tries to chat about coding or politics, the agent flags it.
+*   **Pydantic Schema**:
+    ```python
+    class SecurityCheck(BaseModel):
+        is_safe: bool
+        is_food_related: bool
+        reason: str
+        cleaned_text: str
+    ```
+*   **Fallback**: Standard regex sanitization stripping tags and known script prefixes.
+
+### 2. 🔍 Parser Agent (`ingredient_parser.py`)
+*   **Role**: Input normalizer and cleaner.
+*   **Key Responsibilities**:
+    *   Splits text by common delimiters (commas, newlines).
+    *   Standardizes whitespace and converts text to lowercase.
+    *   Corrects spelling typos (e.g., `'chiken'` ➔ `'chicken'`, `'gee'` ➔ `'ghee'`).
+    *   Normalizes plurals to singular forms (e.g., `'tomatoes'` ➔ `'tomato'`).
+    *   Deduplicates items to form a clean, unique array.
+*   **Pydantic Schema**:
+    ```python
+    class ParserOutput(BaseModel):
+        ingredients: list[str]
+    ```
+*   **Fallback**: Static dictionary lookup matching standard typos and simple plural replacements.
+
+### 3. 👨‍🍳 Master Chef Recipe Generator Agent (`recipe_generator.py`)
+*   **Role**: Culinary creator.
+*   **Key Responsibilities**:
+    *   Analyzes the list of ingredients to contextually determine the most appropriate culinary style (e.g., Biryani, Pulao, Pasta, Omelette, Soup, Salad, etc.).
+    *   Generates a creative recipe title.
+    *   Crafts exactly 5 logical, sequential, step-by-step instructions.
+    *   Builds tags identifying the meal type (`vegetarian` or `meat`) and the recipe style.
+*   **Pydantic Schema**:
+    ```python
+    class RecipeOutput(BaseModel):
+        title: str
+        servings: int
+        ingredients: list[str]
+        steps: list[str]
+        tags: list[str]
+    ```
+*   **Fallback**: Heavy rule-based procedural generator matching keywords (e.g., if chicken/meat is found, tag `meat` and generate Biryani/Skillet templates).
+
+### 4. 🎙️ Master Chef Narrator Agent (`narrator.py`)
+*   **Role**: Experience enhancer and narrator.
+*   **Key Responsibilities**:
+    *   Prepends "Chef's Special" and attaches matching food emojis to the title.
+    *   Appends relevant preparation emojis (🔪, 🔥, 🍽️) to each of the 5 instructions.
+    *   Estimates difficulty levels (Easy, Medium, Hard) and cooking times.
+    *   Writes a warm, mouthwatering 1-2 sentence description.
+    *   Generates a friendly chef encouragement note ending with *"Bon appétit! ❤️"*.
+*   **Pydantic Schema**:
+    ```python
+    class NarratorOutput(BaseModel):
+        display_title: str
+        ingredients: list[str]
+        steps: list[str]
+        servings: int
+        tags: list[str]
+        note: str
+        cooking_time: str
+        difficulty: str
+        description: str
+    ```
+*   **Fallback**: Rule-based template engines mapping title keywords to specific emojis, times, and pre-formatted descriptions.
 
 ---
-=======
-# 🏗️ System Architecture
 
-```text
-                 User Input
-                     │
-          ┌──────────▼──────────┐
-          │   Streamlit UI       │
-          └──────────┬──────────┘
-                     │
-             Security Validation
-                     │
-                     ▼
-         Ingredient Parser Agent
-                     │
-                     ▼
-        Recipe Generator Agent
-                     │
-                     ▼
-          Narrator / Formatter
-                     │
-                     ▼
-            Final Recipe Card
+## 🔄 End-to-End System Workflow
+
+The user journey spans from the initial raw input down to the interactive, fully loaded recipe card. Below is the step-by-step breakdown:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as User
+    participant App as Streamlit UI (app.py)
+    participant MCP as MCP Orchestrator (mcp_server.py)
+    participant Sec as Security Agent
+    participant Pars as Parser Agent
+    participant Gen as Recipe Gen Agent
+    participant Narr as Narrator Agent
+
+    User->>App: Input ingredients (text or file upload)
+    App->>MCP: process_input(raw_text)
+    
+    Note over MCP,Narr: sequential multi-agent execution
+    MCP->>Sec: sanitize_text(raw_text)
+    Sec-->>MCP: sanitized & verified text (or raises error)
+    
+    MCP->>Pars: parse_ingredients(sanitized_text)
+    Pars-->>MCP: clean list of unique ingredients
+    
+    Note over MCP: Internal Validation Check (1-30 items)
+    
+    MCP->>Gen: generate_recipe(ingredient_list)
+    Gen-->>MCP: raw 5-step recipe JSON
+    
+    MCP->>Narr: narrate_recipe(raw_recipe)
+    Narr-->>MCP: enriched recipe JSON (with emojis, tips, time, difficulty)
+    
+    MCP-->>App: final narrated recipe payload
+    App->>User: Render styled recipe card (interactive badges, cards, tips)
 ```
 
----
-
-# ⚙️ Workflow
-
-### Step 1
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
-
-User enters ingredients or uploads a file.
-
-### Step 2
-
-Security module validates and sanitizes the input.
-
-### Step 3
-
-Parser extracts ingredients, removes duplicates, and normalizes plural words.
-
-### Step 4
-
-Recipe Generator creates a suitable recipe based on detected ingredients.
-
-### Step 5
-
-Narrator formats the recipe into a visually appealing cooking guide.
+1.  **User Submission**: The user chooses to type ingredients or upload a file (`.txt` or `.json`).
+2.  **Request Handshake**: Streamlit captures the raw input and calls the MCP Orchestrator.
+3.  **Sanitization Check**: The Security Agent validates safety and relevance. If unsafe or non-food related, it halts execution and raises a clear descriptive error.
+4.  **Cleaning & Normalization**: The Parser Agent resolves pluralizations, typos, and trims spaces, outputting a sanitized python list.
+5.  **Structural Validation**: The Orchestrator validates the size of the array (rejects empty lists or lists containing more than 30 ingredients to prevent denial-of-service/hallucination behavior).
+6.  **Culinary Design**: The Recipe Generator builds a coherent recipe with structured steps.
+7.  **Narrative Polish**: The Narrator Agent applies emojis, notes, cooking time, and difficulty metadata.
+8.  **Render**: The Streamlit application renders the finished recipe card using modern Glassmorphism, animations, responsive grid columns, colored tags, and custom components.
 
 ---
 
-# 📦 Installation
+## 🛠️ File Structure
 
-Clone the repository:
+The project maintains a modular codebase grouping agents into their respective functional boundaries:
 
-```bash
-git clone https://github.com/KGPIAN-Bhaskar/ChefAI-MultiAgent-Cooking-System.git
-```
-
-Move into the project directory:
-
-```bash
-cd ChefAI-MultiAgent-Cooking-System
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-# ▶️ Run the Application
-
-```bash
-streamlit run app.py
-```
-
-<<<<<<< HEAD
----
-
-## Sample Input
-=======
-The application will launch automatically in your default browser.
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
-
----
-
-# 📥 Sample Input
-
-Example ingredient list:
-
-```text
-tomato
-onion
-garlic
-olive oil
-pasta
-```
-
-or JSON format
-
-```json
-[
-<<<<<<< HEAD
-  "chicken",
-  "rice",
-  "ghee"
-=======
-  "tomato",
-  "onion",
-  "garlic",
-  "olive oil",
-  "pasta"
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
-]
-```
-
----
-
-# 📊 Example Output
-
-```
-🍝 Garlic Tomato Pasta
-
-Ingredients:
-• Tomato
-• Onion
-• Garlic
-• Pasta
-• Olive Oil
-
-Cooking Steps:
-1. Heat olive oil.
-2. Sauté onions and garlic.
-3. Add chopped tomatoes.
-4. Cook the pasta separately.
-5. Mix everything together.
-6. Garnish and serve hot.
-
-Enjoy your meal! 🍽️
-```
-
----
-
-# 🔒 Security Features
-
-* Input sanitization
-* HTML tag removal
-* Safe file upload validation
-* Ingredient count validation
-* Duplicate removal
-* Invalid input detection
-
----
-
-# 🎯 Future Improvements
-
-* 🤖 LLM-powered recipe generation
-* 🧠 Multi-Agent AI using LangGraph
-* 🍎 Nutrition analysis
-* 📸 Image-based ingredient recognition
-* 🛒 Grocery recommendation system
-* 🌍 Multi-language support
-* 🎤 Voice-based cooking assistant
-* 📱 Mobile application
-* ☁️ Cloud deployment
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork this repository.
-2. Create a new feature branch.
-3. Commit your changes.
-4. Submit a Pull Request.
-
----
-
-# 📄 License
-
-This project is intended for educational and learning purposes.
-
----
-
-# 👨‍💻 Author
-
-## **Bhaskar Mandal**
-
-**AI/ML Engineer Enthusiast**
-
-**M.Tech, IIT Kharagpur**
-
-* 💼 Interested in Artificial Intelligence, Machine Learning, Data Science, and Multi-Agent Systems
-* 🐍 Skilled in Python, C++, SQL, Machine Learning, Deep Learning, Streamlit, and Git
-* 🌱 Currently exploring LLMs, RAG, LangChain, LangGraph, MCP, and AI Agents
-
-### Connect with me
-
-* GitHub: https://github.com/KGPIAN-Bhaskar
-* LinkedIn: https://www.linkedin.com/in/bhaskar-mandal/
-
----
-
-⭐ **If you found this project helpful, consider giving it a Star on GitHub!**
+*   [app.py](file:///c:/Users/manda/Desktop/Chef%20AI/app.py): Streamlit frontend, CSS theme, animations, utility styling.
+*   [mcp_server.py](file:///c:/Users/manda/Desktop/Chef%20AI/mcp_server.py): Orchestrates the multi-agent execution pipeline.
+*   [security.py](file:///c:/Users/manda/Desktop/Chef%20AI/security.py): Security validation, prompt injection protection, input constraints.
+*   [ingredient_parser.py](file:///c:/Users/manda/Desktop/Chef%20AI/ingredient_parser.py): Ingredient parsing, spelling autocorrection, duplication removal.
+*   [recipe_generator.py](file:///c:/Users/manda/Desktop/Chef%20AI/recipe_generator.py): Recipe model generation, culinary style selection, cooking steps.
+*   [narrator.py](file:///c:/Users/manda/Desktop/Chef%20AI/narrator.py): Cooking-themed emojis, description generation, difficulty, tips.
+*   [.env](file:///c:/Users/manda/Desktop/Chef%20AI/.env): Stores application environment variables like `GEMINI_API_KEY`.

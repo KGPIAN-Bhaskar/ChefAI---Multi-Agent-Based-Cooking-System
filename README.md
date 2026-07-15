@@ -63,18 +63,6 @@ The project demonstrates modular software design by separating responsibilities 
 ChefAI-MultiAgent-Cooking-System/
 │
 <<<<<<< HEAD
-├── app.py                  # Streamlit UI
-├── mcp_server.py           # Orchestration module
-├── security.py             # Security checks, sanitization, and Pydantic schemas
-├── ingredient_parser.py    # Typo correction, plural normalization, and parser schemas
-├── recipe_generator.py     # Recipe generation and selector schemas
-├── narrator.py             # Recipe narrator, metadata compiler, and decorator schemas
-│
-├── .env                    # Local environment variables (ignored by git)
-├── .gitignore              # Git ignore rules
-├── requirements.txt        # Project dependencies
-├── README.md               # Project documentation
-└── sample_ingredients.txt   # Sample ingredients list for testing
 =======
 ├── app.py                     # Streamlit User Interface
 ├── mcp_server.py              # Multi-Agent Orchestrator

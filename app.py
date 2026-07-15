@@ -1,3 +1,4 @@
+
 # pyrefly: ignore [missing-import]
 import streamlit as st
 import json
@@ -65,6 +66,7 @@ footer {visibility: hidden;}
     font-weight: 700;
     color: #1F2937;
     margin: 10px 0;
+    text-align: center !important;
 }
 
 .hero-subtitle {
@@ -73,6 +75,7 @@ footer {visibility: hidden;}
     max-width: 700px;
     margin: 0 auto;
     font-weight: 400;
+    text-align: center !important;
 }
 
 /* Floating Emojis Anim */
@@ -531,12 +534,13 @@ hero_html = """
         <span class="float-emoji">🍅</span>
         <span class="float-emoji">🧅</span>
         <span class="float-emoji">🍝</span>
+        <span class="float-emoji">🍗</span>
         <span class="float-emoji">🧄</span>
         <span class="float-emoji">🥬</span>
         <span class="float-emoji">🥑</span>
     </div>
-    <h1 class="hero-title">Chef AI – Ingredient to Recipe</h1>
-    <p class="hero-subtitle">Turn your ingredients into delicious homemade recipes using AI-inspired rule-based cooking.</p>
+    <h1 class="hero-title">Multi-Agent Based Cooking System</h1>
+    
 </div>
 """
 st.markdown(clean_html(hero_html), unsafe_allow_html=True)
@@ -717,3 +721,4 @@ with right_col:
         </div>
         """
         st.markdown(clean_html(placeholder_html), unsafe_allow_html=True)
+

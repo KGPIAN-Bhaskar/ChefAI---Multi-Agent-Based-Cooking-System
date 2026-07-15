@@ -1,15 +1,32 @@
-# Chef AI – Ingredient to Recipe
+# Chef AI – LLM Multi-Agent Cooking System
 
-A beginner-friendly Streamlit web application that takes raw text or file inputs of ingredients and generates a fun recipe card dynamically based on rule-based logic.
+Chef AI is a modern Streamlit web application powered by a cooperative **LLM Multi-Agent System** using the modern `google-genai` SDK and the `gemini-3.1-flash-lite` model. It takes raw text inputs or ingredient files and transforms them into beautifully narrated, step-by-step recipe cards.
+
+---
+
+## Architecture
+
+The system coordinates 4 specialized LLM agents in a sequential, cooperative pipeline:
+
+```
+Streamlit UI ──> Security Agent ──> Parser Agent ──> Recipe Gen Agent ──> Narrator Agent
+```
+
+1. **Security Agent** ([security.py](file:///C:/Users/manda/Desktop/Chef%20AI/security.py)): Evaluates the raw input for safety issues (injections, script executions, vulgarity) and checks if the prompt is food-related.
+2. **Parser Agent** ([ingredient_parser.py](file:///C:/Users/manda/Desktop/Chef%20AI/ingredient_parser.py)): Splits inputs, corrects typos (e.g. `chiken` $\rightarrow$ `chicken`), normalizes plurals to singular, and removes duplicates.
+3. **Recipe Generator Agent** ([recipe_generator.py](file:///C:/Users/manda/Desktop/Chef%20AI/recipe_generator.py)): Dynamically decides a cooking style based on ingredients and writes exactly 5 clear, sequential cooking instructions.
+4. **Narrator Agent** ([narrator.py](file:///C:/Users/manda/Desktop/Chef%20AI/narrator.py)): Decorates the steps with stage-specific cooking emojis, writes descriptions, adds friendly chef notes, and computes servings/cooking time.
+
+---
 
 ## Features
 
-- **Text & File Input**: Input ingredients directly or upload a `.txt` or `.json` file.
-- **Input Sanitization & Validation**: Ensures safe, clean, and valid ingredient counts (between 1 and 30).
-- **Plural Normalization**: Automatically converts plurals like `tomatoes` to `tomato` and removes duplicates.
-- **Rule-based Generation**: Generates customized recipe styles (Pasta, Rice Bowl, Salad, or Skillet) based on key ingredients.
-- **Cheerful Narration**: Enriches recipes with fun display titles, step-by-step emojis, and cute notes.
-- **Premium UI**: Modern layout featuring floating food emoji animations.
+- **Cooperative LLM Multi-Agent System**: Utilizes `gemini-3.1-flash-lite` for advanced reasoning, spelling correction, safety, and cooking narration.
+- **Strict 4-Call Production Limit**: Generates every recipe using exactly 4 total LLM calls (1 call per agent) to preserve API quota on the free tier.
+- **Zero-Error Fallback Security**: Built-in offline mode. If `GEMINI_API_KEY` is not present, all agents degrade to a localized, rule-based algorithm automatically.
+- **Modern UI**: Streamlit interface with floating animated food emojis.
+
+---
 
 ## File Structure
 
@@ -18,35 +35,34 @@ chef-ai-recipe-generator/
 │
 ├── app.py                  # Streamlit UI
 ├── mcp_server.py           # Orchestration module
-├── recipe_generator.py     # Rule-based recipe generator
-├── ingredient_parser.py    # Ingredient text parsing and normalization
-├── narrator.py             # Recipe narrator with emojis and titles
-├── security.py             # Security checks, sanitization, and validations
+├── security.py             # Security checks, sanitization, and Pydantic schemas
+├── ingredient_parser.py    # Typo correction, plural normalization, and parser schemas
+├── recipe_generator.py     # Recipe generation and selector schemas
+├── narrator.py             # Recipe narrator, metadata compiler, and decorator schemas
+│
+├── .env                    # Local environment variables (ignored by git)
+├── .gitignore              # Git ignore rules
 ├── requirements.txt        # Project dependencies
 ├── README.md               # Project documentation
 └── sample_ingredients.txt   # Sample ingredients list for testing
 ```
 
-## Architecture
+---
 
-```
-Streamlit UI -> Security -> Parser -> Generator -> Narrator
-```
-
-1. **Streamlit UI (`app.py`)**: Renders layout, handles user interaction, text input, and file upload.
-2. **Security (`security.py`)**: Sanitizes inputs, removes HTML, checks file extensions, and validates list counts.
-3. **Parser (`ingredient_parser.py`)**: Splits, cleans, normalizes simple plurals, and deduplicates inputs.
-4. **Generator (`recipe_generator.py`)**: Evaluates ingredients to produce steps, title, and tags based on simple rules.
-5. **Narrator (`narrator.py`)**: Decorates the output with cooking emojis and custom title stylings.
-
-## Installation Instructions
+## Installation & Setup
 
 1. Ensure Python 3.8+ is installed.
-2. Open your terminal in the workspace directory.
+2. Clone this workspace directory.
 3. Install the dependencies:
    ```bash
    pip install -r requirements.txt
    ```
+4. Create a `.env` file in the root directory and add your Gemini API Key:
+   ```env
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+
+---
 
 ## How to Run
 
@@ -54,6 +70,8 @@ Launch the application using Streamlit:
 ```bash
 streamlit run app.py
 ```
+
+---
 
 ## Sample Input
 
@@ -68,10 +86,8 @@ olive oil
 Or upload a JSON list file like:
 ```json
 [
-  "tomato",
-  "onion",
-  "pasta",
-  "garlic",
-  "olive oil"
+  "chicken",
+  "rice",
+  "ghee"
 ]
 ```

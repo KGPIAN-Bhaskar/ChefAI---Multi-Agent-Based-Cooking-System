@@ -23,7 +23,7 @@ Streamlit UI ──> Security Agent ──> Parser Agent ──> Recipe Gen Agen
 # 👨‍🍳 Chef AI – Multi-Agent Cooking System
 
 > **An AI-powered multi-agent cooking assistant that transforms everyday ingredients into delicious recipes using intelligent agent-based workflows and a modern Streamlit interface.**
->>>>>>> e31f6a4de592f36012adfd3a327a83caecd301eb
+>>>>>>> 
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red)

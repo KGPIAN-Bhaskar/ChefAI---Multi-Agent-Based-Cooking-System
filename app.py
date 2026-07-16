@@ -43,8 +43,8 @@ footer {visibility: hidden;}
    3. BACKGROUND & GLOBAL COLORS
    ========================================== */
 .stApp {
-    background-color: #F8FAFC !important;
-    color: #1F1037 !important;
+    background-color: #F1FAFC !important;
+    color: #1F2937 !important;
 }
 
 /* ==========================================

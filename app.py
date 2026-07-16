@@ -14,7 +14,7 @@ def clean_html(html_str: str) -> str:
 
 # Set up page configurations
 st.set_page_config(
-    page_title="Chef AI – Ingredient to Recipe",
+    page_title="Multi-Agent Based Cooking System",
     page_icon="🍳",
     layout="wide"
 )
@@ -44,7 +44,7 @@ footer {visibility: hidden;}
    ========================================== */
 .stApp {
     background-color: #F8FAFC !important;
-    color: #1F2937 !important;
+    color: #1F1037 !important;
 }
 
 /* ==========================================
